@@ -1,4 +1,4 @@
-# weatherApp2.0
+# weather_app_2.0
 
 Forget looking out of the window, all you need is this app to find out what Mother Nature is up to!
 
