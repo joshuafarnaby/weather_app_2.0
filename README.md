@@ -7,3 +7,7 @@ This app makes use of the OpenWeatherMap public API to retrieve weather data for
 As a bonus feature, users will have the ability to switch between Celsius and (sigh..) Fahrenheit.
 
 Enjoy!
+
+Background photo by <a href="https://unsplash.com/@fakurian?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Milad Fakurian</a> on <a href="https://unsplash.com/t/textures-patterns?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+
+Photo by <a href="https://unsplash.com/@fl__q?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Taiki Ishikawa</a> on <a href="https://unsplash.com/t/textures-patterns?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
