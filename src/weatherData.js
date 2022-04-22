@@ -4,24 +4,27 @@ const weatherData = (() => {
   const API_KEY = "cd1c2d65c0cb1e69529587b267dbe878";
 
   const convertKelvinToCelsius = (temperature) => (temperature - 273.15).toFixed(1);
+  const capitalise = (string) => string
+    .split(" ")
+    .map((word) => word.substring(0, 1).toUpperCase() + word.substring(1))
+    .join(" ");
 
   const publishRelevantCurrentData = (cityName, { current, daily }) => {
-    // pubsub.publish("currentDataRetrieved", {
-    //   temp: convertKelvinToCelsius(current.temp),
-    //   feelsLike: current.feelsLike,
-    //   humidity: current.humidity,
-    //   pressure: current.pressure,
-    //   sunrise: current.sunrise,
-    //   sunset: current.sunset,
-    //   uvIndex: current.uvi,
-    //   visibility: current.visibility,
-    //   windSpeed: current.wind_speed,
-    //   windDeg: current.wind_deg,
-    //   description: current.weather[0].description,
-    //   main: current.weather[0].main,
-    // });
-
-    console.log(current);
+    pubsub.publish("currentDataRetrieved", {
+      cityName: capitalise(cityName),
+      temp: convertKelvinToCelsius(current.temp),
+      feelsLike: current.feelsLike,
+      humidity: current.humidity,
+      pressure: current.pressure,
+      sunrise: current.sunrise,
+      sunset: current.sunset,
+      uvIndex: current.uvi,
+      visibility: current.visibility,
+      windSpeed: current.wind_speed,
+      windDeg: current.wind_deg,
+      description: current.weather[0].description,
+      main: current.weather[0].main,
+    });
 
     console.log({
       cityName,
@@ -96,11 +99,15 @@ const weatherData = (() => {
         throw new Error(res.statusText);
       })
       .then((data) => {
+        // console.log(data);
         publishRelevantCurrentData(cityName, data);
         publishHourlyData(data);
         publishWeeklyData(data);
       })
-      .catch(() => publishError());
+      .catch((error) => {
+        console.log(error);
+        publishError();
+      });
   };
 
   pubsub.subscribe("searchFormSubmitted", fetchWeatherData);
