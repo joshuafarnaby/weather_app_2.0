@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --off-white: #fefefe
+}
+
+body {
+  /* background-image: url('../assets/milad-fakurian-VbC-EiOTDqA-unsplash.jpg'); */
+  background-image: url('../assets/taiki-ishikawa-hxYjU7HfcEo-unsplash.jpg');
+  background-attachment: fixed;
+  background-size: cover;
+  height: 200vh;
+  font-size: 36px;
+  font-family: 'Open Sans';
+  color: var(--off-white);
+  position: relative;
+}
+
+.city-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  gap: 10px;
+}
+
+.city-form::after {
+  content: '';
+  height: 2px;
+  width: 300px;
+  bottom: 0;
+  right: 0;
+  background-color: var(--off-white);
+  position: absolute;
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
+  transform-origin: left;
+}
+
+.city-form > label {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.form-input {
+  width: 300px;
+  font-size: 1.6rem;
+  padding: 4px 6px;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 2px solid #777;
+  background-color: rgba(0, 0, 0, 0);
+  font-family: inherit;
+  color: var(--off-white);
+  position: relative;
+}
+
+.submit-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 5px;
+}
+
+.form-error {
+  position: absolute;
+  bottom: -20px;
+  right: 0px;
+  font-size: 1rem;
+}
+
+.submit-btn > img {
+  transform: scale(1.1);
+}
+
+.city-form:focus-within::after {
+  transform: scaleX(1);
+}
+
+.form-input:focus {
+  outline: none;
+}
+
+.submit-btn:hover {
+  transform: scale(1.1);
+}
+
