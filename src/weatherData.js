@@ -13,7 +13,9 @@ const weatherData = (() => {
     pubsub.publish("currentDataRetrieved", {
       cityName: capitalise(cityName),
       temp: convertKelvinToCelsius(current.temp),
-      feelsLike: current.feelsLike,
+      feelsLike: convertKelvinToCelsius(current.feels_like),
+      minTemp: convertKelvinToCelsius(daily[0].temp.min),
+      maxTemp: convertKelvinToCelsius(daily[0].temp.max),
       humidity: current.humidity,
       pressure: current.pressure,
       sunrise: current.sunrise,
@@ -22,7 +24,7 @@ const weatherData = (() => {
       visibility: current.visibility,
       windSpeed: current.wind_speed,
       windDeg: current.wind_deg,
-      description: current.weather[0].description,
+      description: capitalise(current.weather[0].description),
       main: current.weather[0].main,
     });
 
@@ -55,14 +57,14 @@ const weatherData = (() => {
     //   description: hour.weather[0].description,
     // })));
 
-    console.log(hourly.slice(0, 24).map((hour) => ({
-      temp: convertKelvinToCelsius(hour.temp),
-      feelsLike: convertKelvinToCelsius(hour.feels_like),
-      windSpeed: hour.wind_speed,
-      windDeg: hour.wind_deg,
-      main: hour.weather[0].main,
-      description: hour.weather[0].description,
-    })));
+    // console.log(hourly.slice(0, 24).map((hour) => ({
+    //   temp: convertKelvinToCelsius(hour.temp),
+    //   feelsLike: convertKelvinToCelsius(hour.feels_like),
+    //   windSpeed: hour.wind_speed,
+    //   windDeg: hour.wind_deg,
+    //   main: hour.weather[0].main,
+    //   description: hour.weather[0].description,
+    // })));
   };
 
   const publishWeeklyData = ({ daily }) => {
@@ -74,13 +76,13 @@ const weatherData = (() => {
     //   description: day.weather[0].description,
     // }))));
 
-    console.log(daily.slice(1).map((day) => ({
-      temp: convertKelvinToCelsius(day.temp.day),
-      minTemp: convertKelvinToCelsius(day.temp.min),
-      maxTemp: convertKelvinToCelsius(day.temp.max),
-      main: day.weather[0].main,
-      description: day.weather[0].description,
-    })));
+    // console.log(daily.slice(1).map((day) => ({
+    //   temp: convertKelvinToCelsius(day.temp.day),
+    //   minTemp: convertKelvinToCelsius(day.temp.min),
+    //   maxTemp: convertKelvinToCelsius(day.temp.max),
+    //   main: day.weather[0].main,
+    //   description: day.weather[0].description,
+    // })));
   };
 
   const publishError = () => pubsub.publish("dataFetchError", "That city wasn't found - please try again");
@@ -99,7 +101,6 @@ const weatherData = (() => {
         throw new Error(res.statusText);
       })
       .then((data) => {
-        // console.log(data);
         publishRelevantCurrentData(cityName, data);
         publishHourlyData(data);
         publishWeeklyData(data);
