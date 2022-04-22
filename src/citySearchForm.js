@@ -9,7 +9,7 @@ const searchCityForm = (() => {
 
     form.innerHTML = `
       <label for="search-city-input">SEARCH CITY:</label>
-      <input type="text" id="search-city-input" name="city" class="form-input">
+      <input type="text" id="search-city-input" name="city" class="form-input" placeholder="New York">
       <span id="error-msg" class="form-error"></span>
       <button class="submit-btn"><img src="${searchIcon}" alt="search icon"></button>
     `;
@@ -17,14 +17,34 @@ const searchCityForm = (() => {
     return form;
   })();
 
-  // const publishSearchValue = (ev) => {
-  //   ev.preventDefault();
-  //   const searchValue = ev.target.querySelector("#search-city-input").value;
-  // };
+  const hideFormError = () => searchForm.querySelector("#error-msg").classList.remove("visible");
+
+  const displayFormError = (message) => {
+    searchForm.querySelector("#error-msg").classList.add("visible");
+    searchForm.querySelector("#error-msg").innerText = message;
+
+    setTimeout(hideFormError, 2000);
+  };
+
+  const publishSearchValue = (ev) => {
+    ev.preventDefault();
+
+    const searchValue = ev.target.querySelector("#search-city-input").value;
+    ev.target.reset();
+
+    if (searchValue === "") {
+      displayFormError("Please enter a valid search term");
+      return;
+    }
+
+    pubsub.publish("searchFormSubmitted", searchValue);
+  };
 
   const render = () => document.body.appendChild(searchForm);
 
-  // searchForm.addEventListener("submit", publishSearchValue);
+  searchForm.addEventListener("submit", publishSearchValue);
+
+  pubsub.subscribe("dataFetchError", displayFormError);
 
   return {
     render,
