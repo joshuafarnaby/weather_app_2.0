@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 
+@import './formStyle.css';
+@import './mainDisplay.css';
+
 *, *::before, *::after {
   margin: 0;
   padding: 0;
@@ -15,95 +18,15 @@ body {
   background-image: url('../assets/taiki-ishikawa-hxYjU7HfcEo-unsplash.jpg');
   background-attachment: fixed;
   background-size: cover;
-  height: 200vh;
+  min-height: 100vh;
   font-size: 36px;
   font-family: 'Open Sans';
   color: var(--off-white);
   position: relative;
   letter-spacing: 1px;
-}
-
-.city-form {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  /* justify-content: center; */
   align-items: center;
-  position: absolute;
-  right: 5px;
-  top: 5px;
-  gap: 10px;
+  padding: 100px 50px;
 }
-
-.city-form::after {
-  content: '';
-  height: 2px;
-  width: 400px;
-  bottom: 0;
-  right: 0;
-  background-color: var(--off-white);
-  position: absolute;
-  transform: scaleX(0);
-  transition: transform 0.3s ease-in-out;
-  transform-origin: left;
-}
-
-.city-form > label {
-  font-size: 2rem;
-  line-height: 1;
-}
-
-.form-input {
-  width: 400px;
-  font-size: 1.6rem;
-  padding: 4px 6px;
-  border-top: none;
-  border-right: none;
-  border-left: none;
-  border-bottom: 2px solid #777;
-  background-color: rgba(0, 0, 0, 0);
-  font-family: inherit;
-  color: var(--off-white);
-  position: relative;
-}
-
-.submit-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  position: absolute;
-  right: 5px;
-}
-
-.form-error {
-  position: absolute;
-  bottom: -22px;
-  right: 0px;
-  font-size: 1rem;
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.3s ease-in-out;
-}
-
-.form-error.visible {
-  transform: scaleX(1);
-}
-
-.submit-btn > img {
-  transform: scale(1.1);
-}
-
-.city-form:focus-within::after {
-  transform: scaleX(1);
-}
-
-.form-input:focus {
-  outline: none;
-}
-
-.form-input:placeholder-shown {
-  font-style: italic;
-}
-
-.submit-btn:hover {
-  transform: scale(1.1);
-}
-

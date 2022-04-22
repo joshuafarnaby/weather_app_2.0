@@ -3,9 +3,9 @@ import pubsub from "./pubsub";
 const weatherData = (() => {
   const API_KEY = "cd1c2d65c0cb1e69529587b267dbe878";
 
-  const convertKelvinToCelsius = (temperature) => (temperature - 273.15).toFixed(2);
+  const convertKelvinToCelsius = (temperature) => (temperature - 273.15).toFixed(1);
 
-  const publishRelevantCurrentData = ({ current }) => {
+  const publishRelevantCurrentData = (cityName, { current, daily }) => {
     // pubsub.publish("currentDataRetrieved", {
     //   temp: convertKelvinToCelsius(current.temp),
     //   feelsLike: current.feelsLike,
@@ -21,9 +21,14 @@ const weatherData = (() => {
     //   main: current.weather[0].main,
     // });
 
+    console.log(current);
+
     console.log({
+      cityName,
       temp: convertKelvinToCelsius(current.temp),
-      feelsLike: current.feels_like,
+      feelsLike: convertKelvinToCelsius(current.feels_like),
+      minTemp: convertKelvinToCelsius(daily[0].temp.min),
+      maxTemp: convertKelvinToCelsius(daily[0].temp.max),
       humidity: current.humidity,
       pressure: current.pressure,
       sunrise: current.sunrise,
@@ -91,14 +96,12 @@ const weatherData = (() => {
         throw new Error(res.statusText);
       })
       .then((data) => {
-        publishRelevantCurrentData(data);
+        publishRelevantCurrentData(cityName, data);
         publishHourlyData(data);
         publishWeeklyData(data);
       })
       .catch(() => publishError());
   };
-
-  // fetchWeatherData("london");
 
   pubsub.subscribe("searchFormSubmitted", fetchWeatherData);
 })();
