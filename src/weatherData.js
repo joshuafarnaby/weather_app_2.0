@@ -3,7 +3,7 @@ import pubsub from "./pubsub";
 const weatherData = (() => {
   const API_KEY = "cd1c2d65c0cb1e69529587b267dbe878";
 
-  const kelvinToCelsius = (temperature) => (temperature - 273.15).toFixed(1);
+  // const kelvinToCelsius = (temperature) => (temperature - 273.15).toFixed(1);
   const capitalise = (string) => string
     .split(" ")
     .map((word) => word.substring(0, 1).toUpperCase() + word.substring(1))
@@ -21,10 +21,14 @@ const weatherData = (() => {
 
     pubsub.publish("currentDataRetrieved", {
       cityName: capitalise(cityName),
-      temp: kelvinToCelsius(current.temp),
-      feelsLike: kelvinToCelsius(current.feels_like),
-      minTemp: kelvinToCelsius(daily[0].temp.min),
-      maxTemp: kelvinToCelsius(daily[0].temp.max),
+      // temp: kelvinToCelsius(current.temp),
+      // feelsLike: kelvinToCelsius(current.feels_like),
+      // minTemp: kelvinToCelsius(daily[0].temp.min),
+      // maxTemp: kelvinToCelsius(daily[0].temp.max),
+      temp: current.temp,
+      feelsLike: current.feels_like,
+      minTemp: daily[0].temp.min,
+      maxTemp: daily[0].temp.max,
       humidity: current.humidity,
       pressure: current.pressure,
       sunrise: unixEpochToTime(current.sunrise, timezone),
@@ -39,10 +43,14 @@ const weatherData = (() => {
 
     console.log({
       cityName,
-      temp: kelvinToCelsius(current.temp),
-      feelsLike: kelvinToCelsius(current.feels_like),
-      minTemp: kelvinToCelsius(daily[0].temp.min),
-      maxTemp: kelvinToCelsius(daily[0].temp.max),
+      // temp: kelvinToCelsius(current.temp),
+      // feelsLike: kelvinToCelsius(current.feels_like),
+      // minTemp: kelvinToCelsius(daily[0].temp.min),
+      // maxTemp: kelvinToCelsius(daily[0].temp.max),
+      temp: current.temp,
+      feelsLike: current.feels_like,
+      minTemp: daily[0].temp.min,
+      maxTemp: daily[0].temp.max,
       humidity: current.humidity,
       pressure: current.pressure,
       sunrise: unixEpochToTime(current.sunrise, timezone),
@@ -103,7 +111,7 @@ const weatherData = (() => {
 
         throw new Error(res.statusText);
       })
-      .then((data) => fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${data[0].lat}&lon=${data[0].lon}&exclude=minutely,alert&appid=${API_KEY}`))
+      .then((data) => fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${data[0].lat}&lon=${data[0].lon}&exclude=minutely,alert&appid=${API_KEY}&units=metric`))
       .then((res) => {
         if (res.ok) return res.json();
 
