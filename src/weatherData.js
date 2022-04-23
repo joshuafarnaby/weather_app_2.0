@@ -17,17 +17,23 @@ const weatherData = (() => {
 
   const milesPerHour = (metersPerSecond) => (metersPerSecond * 2.2369).toFixed(1);
 
+  const getDay = (currentDay, index) => {
+    const nextDayNumber = (currentDay + index + 1) % 7;
+
+    if (nextDayNumber === 0) return "Sunday";
+    if (nextDayNumber === 1) return "Monday";
+    if (nextDayNumber === 2) return "Tuesday";
+    if (nextDayNumber === 3) return "Wednesday";
+    if (nextDayNumber === 4) return "Thursday";
+    if (nextDayNumber === 5) return "Friday";
+    if (nextDayNumber === 6) return "Saturday";
+  };
+
   const publishRelevantCurrentData = (cityName, {
     current, daily, timezone,
   }) => {
-    // console.log(new Date().toLocaleString("en-US", { timezone }));
-
     pubsub.publish("currentDataRetrieved", {
       cityName: capitalise(cityName),
-      // temp: kelvinToCelsius(current.temp),
-      // feelsLike: kelvinToCelsius(current.feels_like),
-      // minTemp: kelvinToCelsius(daily[0].temp.min),
-      // maxTemp: kelvinToCelsius(daily[0].temp.max),
       temp: current.temp.toFixed(1),
       feelsLike: current.feels_like.toFixed(1),
       minTemp: daily[0].temp.min.toFixed(1),
@@ -44,27 +50,23 @@ const weatherData = (() => {
       main: current.weather[0].main,
     });
 
-    console.log({
-      cityName,
-      // temp: kelvinToCelsius(current.temp),
-      // feelsLike: kelvinToCelsius(current.feels_like),
-      // minTemp: kelvinToCelsius(daily[0].temp.min),
-      // maxTemp: kelvinToCelsius(daily[0].temp.max),
-      temp: current.temp,
-      feelsLike: current.feels_like,
-      minTemp: daily[0].temp.min,
-      maxTemp: daily[0].temp.max,
-      humidity: current.humidity,
-      pressure: current.pressure,
-      sunrise: unixEpochToTime(current.sunrise, timezone),
-      sunset: unixEpochToTime(current.sunset, timezone),
-      uvIndex: current.uvi,
-      visibility: current.visibility,
-      windSpeed: current.wind_speed,
-      windDeg: current.wind_deg,
-      description: current.weather[0].description,
-      main: current.weather[0].main,
-    });
+    // console.log({
+    //   cityName,
+    //   temp: current.temp,
+    //   feelsLike: current.feels_like,
+    //   minTemp: daily[0].temp.min,
+    //   maxTemp: daily[0].temp.max,
+    //   humidity: current.humidity,
+    //   pressure: current.pressure,
+    //   sunrise: unixEpochToTime(current.sunrise, timezone),
+    //   sunset: unixEpochToTime(current.sunset, timezone),
+    //   uvIndex: current.uvi,
+    //   visibility: current.visibility,
+    //   windSpeed: current.wind_speed,
+    //   windDeg: current.wind_deg,
+    //   description: current.weather[0].description,
+    //   main: current.weather[0].main,
+    // });
   };
 
   const publishHourlyData = ({ hourly }) => {
@@ -87,7 +89,10 @@ const weatherData = (() => {
     // })));
   };
 
-  const publishWeeklyData = ({ daily }) => {
+  const publishWeeklyData = ({ daily, timezone_offset: timezoneOffset }) => {
+    const currentDay = new Date(Date.now() + (timezoneOffset * 1000)).getDay();
+
+    console.log(currentDay);
     // pubsub.publish("weeklyDataRetrieved", (daily.slice(1).map((day) => ({
     //   temp: convertKelvinToCelsius(day.temp.day),
     //   minTemp: convertKelvinToCelsius(day.temp.min),
@@ -96,10 +101,20 @@ const weatherData = (() => {
     //   description: day.weather[0].description,
     // }))));
 
-    // console.log(daily.slice(1).map((day) => ({
-    //   temp: convertKelvinToCelsius(day.temp.day),
-    //   minTemp: convertKelvinToCelsius(day.temp.min),
-    //   maxTemp: convertKelvinToCelsius(day.temp.max),
+    pubsub.publish("weekForecastRetrieved", daily.slice(1).map((day, index) => ({
+      day: getDay(currentDay, index),
+      temp: day.temp.day.toFixed(1),
+      minTemp: day.temp.min.toFixed(1),
+      maxTemp: day.temp.max.toFixed(1),
+      main: day.weather[0].main,
+      description: capitalise(day.weather[0].description),
+    })));
+
+    // console.log(daily.slice(1).map((day, index) => ({
+    //   day: getDay(currentDay, index),
+    //   temp: day.temp.day,
+    //   minTemp: day.temp.min,
+    //   maxTemp: day.temp.max,
     //   main: day.weather[0].main,
     //   description: day.weather[0].description,
     // })));

@@ -6,8 +6,8 @@ import snowIcon from "./assets/icons/snow.svg";
 import fogIcon from "./assets/icons/fog.svg";
 import pubsub from "./pubsub";
 
-const mainDisplay = (() => {
-  const currentWeather = (() => {
+const currentWeather = (() => {
+  const currentWeatherContainer = (() => {
     const container = document.createElement("div");
     container.classList.add("current-weather-container");
 
@@ -69,8 +69,8 @@ const mainDisplay = (() => {
   pubsub.subscribe("currentDataRetrieved", displayCurrentData);
 
   return {
-    renderCurrentWeather() { document.body.appendChild(currentWeather); },
+    render() { document.body.appendChild(currentWeatherContainer); },
   };
 })();
 
-export default mainDisplay;
+export default currentWeather;

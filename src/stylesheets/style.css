@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 
 @import './formStyle.css';
-@import './mainDisplay.css';
+@import './currentWeather.css';
+@import './weekForecast.css';
 
 *, *::before, *::after {
   margin: 0;
@@ -27,6 +28,7 @@ body {
   letter-spacing: 1px;
   display: flex;
   flex-direction: column;
+  gap: 200px;
   /* justify-content: center; */
   align-items: center;
   padding: 100px 50px;
