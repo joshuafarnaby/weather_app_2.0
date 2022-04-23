@@ -1,7 +1,7 @@
 .current-weather-container {
   display: grid;
   /* width: 600px; */
-  grid-template: min-content min-content 120px 120px / repeat(2, 250px);
+  grid-template: min-content min-content 120px 120px / repeat(2, max-content);
   /* grid-template: repeat(4, 150px) / repeat(2, 150px); */
   place-items: center;
   grid-template-areas: 

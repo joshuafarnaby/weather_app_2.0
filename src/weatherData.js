@@ -4,6 +4,7 @@ const weatherData = (() => {
   const API_KEY = "cd1c2d65c0cb1e69529587b267dbe878";
 
   // const kelvinToCelsius = (temperature) => (temperature - 273.15).toFixed(1);
+
   const capitalise = (string) => string
     .split(" ")
     .map((word) => word.substring(0, 1).toUpperCase() + word.substring(1))
@@ -13,6 +14,8 @@ const weatherData = (() => {
     const date = new Date(seconds * 1000).toLocaleString("en-US", { timeZone: timezone });
     return date.split(" ").splice(1).join(" ");
   };
+
+  const milesPerHour = (metersPerSecond) => (metersPerSecond * 2.2369).toFixed(1);
 
   const publishRelevantCurrentData = (cityName, {
     current, daily, timezone,
@@ -25,17 +28,17 @@ const weatherData = (() => {
       // feelsLike: kelvinToCelsius(current.feels_like),
       // minTemp: kelvinToCelsius(daily[0].temp.min),
       // maxTemp: kelvinToCelsius(daily[0].temp.max),
-      temp: current.temp,
-      feelsLike: current.feels_like,
-      minTemp: daily[0].temp.min,
-      maxTemp: daily[0].temp.max,
+      temp: current.temp.toFixed(1),
+      feelsLike: current.feels_like.toFixed(1),
+      minTemp: daily[0].temp.min.toFixed(1),
+      maxTemp: daily[0].temp.max.toFixed(1),
       humidity: current.humidity,
       pressure: current.pressure,
       sunrise: unixEpochToTime(current.sunrise, timezone),
       sunset: unixEpochToTime(current.sunset, timezone),
       uvIndex: current.uvi,
       visibility: current.visibility,
-      windSpeed: current.wind_speed,
+      windSpeed: milesPerHour(current.wind_speed),
       windDeg: current.wind_deg,
       description: capitalise(current.weather[0].description),
       main: current.weather[0].main,

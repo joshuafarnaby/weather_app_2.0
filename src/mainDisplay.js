@@ -32,6 +32,8 @@ const mainDisplay = (() => {
     ({ sunrise }) => { document.getElementById("sunrise").textContent = sunrise; },
     ({ sunset }) => { document.getElementById("sunset").textContent = sunset; },
     ({ pressure }) => { document.getElementById("pressure").textContent = pressure; },
+    ({ windSpeed }) => { document.getElementById("wind-speed").textContent = windSpeed; },
+    ({ windDeg }) => { document.getElementById("wind-direction").textContent = windDeg; },
   ];
 
   const displayCurrentData = (data) => displayFunctions.forEach((fn) => fn(data));
