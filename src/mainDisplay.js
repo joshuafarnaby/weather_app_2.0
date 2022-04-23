@@ -15,7 +15,7 @@ const mainDisplay = (() => {
     ({ feelsLike }) => { document.getElementById("feels-like").textContent = feelsLike; },
     ({ minTemp }) => { document.getElementById("min-temp").textContent = minTemp; },
     ({ maxTemp }) => { document.getElementById("max-temp").textContent = maxTemp; },
-    ({ description }) => { document.getElementById("weather-description").innerText = description; },
+    ({ description }) => { document.getElementById("weather-description").textContent = description; },
     ({ main }) => {
       const icon = document.getElementById("weather-icon");
       if (main === "Clouds") icon.src = cloudIcon;
@@ -23,16 +23,14 @@ const mainDisplay = (() => {
       if (main === "Thunderstorms") icon.src = thunderstormIcon;
       if (main === "Drizzle" || main === "Rain") icon.src = rainIcon;
       if (main === "Snow") icon.src = snowIcon;
-      if (main === "Mist"
-        || main === "Smoke"
-        || main === "Haze"
-        || main === "Dust"
-        || main === "Fog"
-        || main === "Sand"
-        || main === "Ash"
-        || main === "Tornado"
+      if (main === "Mist" || main === "Smoke"
+        || main === "Haze" || main === "Dust"
+        || main === "Fog" || main === "Sand"
+        || main === "Ash" || main === "Tornado"
       ) icon.src = fogIcon;
     },
+    ({ sunrise }) => { document.getElementById("sunrise").textContent = sunrise; },
+    ({ sunset }) => { document.getElementById("sunset").textContent = sunset; },
   ];
 
   const displayCurrentData = (data) => displayFunctions.forEach((fn) => fn(data));

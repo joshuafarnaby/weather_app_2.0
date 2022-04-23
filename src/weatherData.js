@@ -3,23 +3,32 @@ import pubsub from "./pubsub";
 const weatherData = (() => {
   const API_KEY = "cd1c2d65c0cb1e69529587b267dbe878";
 
-  const convertKelvinToCelsius = (temperature) => (temperature - 273.15).toFixed(1);
+  const kelvinToCelsius = (temperature) => (temperature - 273.15).toFixed(1);
   const capitalise = (string) => string
     .split(" ")
     .map((word) => word.substring(0, 1).toUpperCase() + word.substring(1))
     .join(" ");
 
-  const publishRelevantCurrentData = (cityName, { current, daily }) => {
+  const unixEpochToTime = (seconds, timezone) => {
+    const date = new Date(seconds * 1000).toLocaleString("en-US", { timeZone: timezone });
+    return date.split(" ").splice(1).join(" ");
+  };
+
+  const publishRelevantCurrentData = (cityName, {
+    current, daily, timezone,
+  }) => {
+    // console.log(new Date().toLocaleString("en-US", { timezone }));
+
     pubsub.publish("currentDataRetrieved", {
       cityName: capitalise(cityName),
-      temp: convertKelvinToCelsius(current.temp),
-      feelsLike: convertKelvinToCelsius(current.feels_like),
-      minTemp: convertKelvinToCelsius(daily[0].temp.min),
-      maxTemp: convertKelvinToCelsius(daily[0].temp.max),
+      temp: kelvinToCelsius(current.temp),
+      feelsLike: kelvinToCelsius(current.feels_like),
+      minTemp: kelvinToCelsius(daily[0].temp.min),
+      maxTemp: kelvinToCelsius(daily[0].temp.max),
       humidity: current.humidity,
       pressure: current.pressure,
-      sunrise: current.sunrise,
-      sunset: current.sunset,
+      sunrise: unixEpochToTime(current.sunrise, timezone),
+      sunset: unixEpochToTime(current.sunset, timezone),
       uvIndex: current.uvi,
       visibility: current.visibility,
       windSpeed: current.wind_speed,
@@ -30,14 +39,14 @@ const weatherData = (() => {
 
     console.log({
       cityName,
-      temp: convertKelvinToCelsius(current.temp),
-      feelsLike: convertKelvinToCelsius(current.feels_like),
-      minTemp: convertKelvinToCelsius(daily[0].temp.min),
-      maxTemp: convertKelvinToCelsius(daily[0].temp.max),
+      temp: kelvinToCelsius(current.temp),
+      feelsLike: kelvinToCelsius(current.feels_like),
+      minTemp: kelvinToCelsius(daily[0].temp.min),
+      maxTemp: kelvinToCelsius(daily[0].temp.max),
       humidity: current.humidity,
       pressure: current.pressure,
-      sunrise: current.sunrise,
-      sunset: current.sunset,
+      sunrise: unixEpochToTime(current.sunrise, timezone),
+      sunset: unixEpochToTime(current.sunset, timezone),
       uvIndex: current.uvi,
       visibility: current.visibility,
       windSpeed: current.wind_speed,
@@ -101,6 +110,7 @@ const weatherData = (() => {
         throw new Error(res.statusText);
       })
       .then((data) => {
+        console.log(data);
         publishRelevantCurrentData(cityName, data);
         publishHourlyData(data);
         publishWeeklyData(data);
