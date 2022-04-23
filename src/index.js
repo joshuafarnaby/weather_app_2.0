@@ -6,3 +6,5 @@ import searchCityForm from "./citySearchForm";
 import mainDisplay from "./mainDisplay";
 
 searchCityForm.render();
+mainDisplay.renderCurrentWeather();
+weatherData.loadDefault("melbourne");

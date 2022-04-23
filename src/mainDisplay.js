@@ -6,9 +6,37 @@ import snowIcon from "./assets/icons/snow.svg";
 import fogIcon from "./assets/icons/fog.svg";
 import pubsub from "./pubsub";
 
-document.getElementById("weather-icon").src = sunnyIcon;
-
 const mainDisplay = (() => {
+  const currentWeather = (() => {
+    const container = document.createElement("div");
+    container.classList.add("current-weather-container");
+
+    container.innerHTML = `
+      <h1 id="city-name" class="city-name"></h1>
+      <h2  class="current-temp"><span id="current-temp"></span><span class="degree-symbol">˚C</span></h2>
+      <div class="container-tl info-box">
+        <p>Feels like: <span id="feels-like"></span><span class="degree-symbol">˚C</span></p>
+        <p>Low: <span id="min-temp"></span><span class="degree-symbol">˚C</span></p>
+        <p>High: <span id="max-temp"></span><span class="degree-symbol">˚C</span></p>
+      </div>
+      <div class="container-tr info-box">
+        <img src="" alt="" id="weather-icon" class="weather-icon center">
+        <p id="weather-description" class="center"></p>
+      </div>
+      <div class="container-bl info-box">
+        <p>Wind speed: <span id="wind-speed"></span>mph</p>
+        <p>Direction: <span id="wind-direction"></span>deg</p>
+      </div>
+      <div class="container-br info-box">
+        <p>Sunrise: <span id="sunrise"></span></p>
+        <p>Sunset: <span id="sunset"></span></p>
+        <p >Pressure: <span id="pressure"></span>hPa</p>
+      </div>
+    `;
+
+    return container;
+  })();
+
   const displayFunctions = [
     ({ cityName }) => { document.getElementById("city-name").textContent = cityName; },
     ({ temp }) => { document.getElementById("current-temp").textContent = temp; },
@@ -39,6 +67,10 @@ const mainDisplay = (() => {
   const displayCurrentData = (data) => displayFunctions.forEach((fn) => fn(data));
 
   pubsub.subscribe("currentDataRetrieved", displayCurrentData);
+
+  return {
+    renderCurrentWeather() { document.body.appendChild(currentWeather); },
+  };
 })();
 
 export default mainDisplay;

@@ -132,7 +132,13 @@ const weatherData = (() => {
       });
   };
 
+  const loadDefault = (cityName) => fetchWeatherData(cityName);
+
   pubsub.subscribe("searchFormSubmitted", fetchWeatherData);
+
+  return {
+    loadDefault,
+  };
 })();
 
 export default weatherData;
