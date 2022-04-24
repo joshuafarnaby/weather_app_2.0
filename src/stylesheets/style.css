@@ -3,6 +3,7 @@
 @import './formStyle.css';
 @import './currentWeather.css';
 @import './weekForecast.css';
+@import './hourlyForecast.css';
 
 *, *::before, *::after {
   margin: 0;

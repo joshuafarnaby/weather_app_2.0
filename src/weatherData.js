@@ -29,6 +29,8 @@ const weatherData = (() => {
     if (nextDayNumber === 6) return "Saturday";
   };
 
+  const getHour = (currentHour, index) => (currentHour + index) % 24;
+
   const publishRelevantCurrentData = (cityName, {
     current, daily, timezone,
   }) => {
@@ -49,27 +51,13 @@ const weatherData = (() => {
       description: capitalise(current.weather[0].description),
       main: current.weather[0].main,
     });
-
-    // console.log({
-    //   cityName,
-    //   temp: current.temp,
-    //   feelsLike: current.feels_like,
-    //   minTemp: daily[0].temp.min,
-    //   maxTemp: daily[0].temp.max,
-    //   humidity: current.humidity,
-    //   pressure: current.pressure,
-    //   sunrise: unixEpochToTime(current.sunrise, timezone),
-    //   sunset: unixEpochToTime(current.sunset, timezone),
-    //   uvIndex: current.uvi,
-    //   visibility: current.visibility,
-    //   windSpeed: current.wind_speed,
-    //   windDeg: current.wind_deg,
-    //   description: current.weather[0].description,
-    //   main: current.weather[0].main,
-    // });
   };
 
-  const publishHourlyData = ({ hourly }) => {
+  const publishHourlyData = ({ hourly, timezone_offset: timezoneOffset }) => {
+    const currentHour = new Date(Date.now() + (timezoneOffset * 1000)).getUTCHours();
+    // const currentHour = new Date().getHours();
+
+    console.log(currentHour);
     // pubsub.publish("hourlyDataRetrieved", hourly.slice(0, 24).map((hour) => ({
     //   temp: convertKelvinToCelsius(hour.temp),
     //   feelsLike: convertKelvinToCelsius(hour.feels_like),
@@ -79,27 +67,19 @@ const weatherData = (() => {
     //   description: hour.weather[0].description,
     // })));
 
-    // console.log(hourly.slice(0, 24).map((hour) => ({
-    //   temp: convertKelvinToCelsius(hour.temp),
-    //   feelsLike: convertKelvinToCelsius(hour.feels_like),
-    //   windSpeed: hour.wind_speed,
-    //   windDeg: hour.wind_deg,
-    //   main: hour.weather[0].main,
-    //   description: hour.weather[0].description,
-    // })));
+    console.log(hourly.slice(0, 24).map((hour, index) => ({
+      hour: getHour(currentHour, index),
+      temp: hour.temp.toFixed(1),
+      // feelsLike: hour.feels_like.toFixed(1),
+      // windSpeed: hour.wind_speed,
+      // windDeg: hour.wind_deg,
+      main: hour.weather[0].main,
+      description: capitalise(hour.weather[0].description),
+    })));
   };
 
   const publishWeeklyData = ({ daily, timezone_offset: timezoneOffset }) => {
     const currentDay = new Date(Date.now() + (timezoneOffset * 1000)).getDay();
-
-    console.log(currentDay);
-    // pubsub.publish("weeklyDataRetrieved", (daily.slice(1).map((day) => ({
-    //   temp: convertKelvinToCelsius(day.temp.day),
-    //   minTemp: convertKelvinToCelsius(day.temp.min),
-    //   maxTemp: convertKelvinToCelsius(day.temp.max),
-    //   main: day.weather[0].main,
-    //   description: day.weather[0].description,
-    // }))));
 
     pubsub.publish("weekForecastRetrieved", daily.slice(1).map((day, index) => ({
       day: getDay(currentDay, index),
@@ -109,15 +89,6 @@ const weatherData = (() => {
       main: day.weather[0].main,
       description: capitalise(day.weather[0].description),
     })));
-
-    // console.log(daily.slice(1).map((day, index) => ({
-    //   day: getDay(currentDay, index),
-    //   temp: day.temp.day,
-    //   minTemp: day.temp.min,
-    //   maxTemp: day.temp.max,
-    //   main: day.weather[0].main,
-    //   description: day.weather[0].description,
-    // })));
   };
 
   const publishError = () => pubsub.publish("dataFetchError", "That city wasn't found - please try again");

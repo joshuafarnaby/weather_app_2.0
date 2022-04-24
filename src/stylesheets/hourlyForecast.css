@@ -1,0 +1,66 @@
+.hour-section-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 80%;
+}
+
+.hour-section-wrapper > button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  /* width: none; */
+  /* height: min-content; */
+}
+
+.direction-icon {
+  width: 4rem;
+}
+
+.hour-card-container {
+  border: 1px solid #fefefe;
+  border-radius: 10px;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  overflow-y: scroll;
+  /* background-color: rgba(0, 0, 0, 0.2); */
+}
+
+.hour-card-container::-webkit-scrollbar-track {
+  appearance: none;
+}
+
+.hour-forecast-card {
+  border: 1px solid #fefefe;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  min-width: 10rem;
+}
+
+.hour-icon-container {
+  /* text-align: center; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* margin: auto 0; */
+}
+
+.hour-icon {
+  width: 4rem;
+}
+
+.hour-description {
+  line-height: 1;
+  font-size: 1rem;
+}
