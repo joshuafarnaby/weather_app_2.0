@@ -39,6 +39,8 @@ const weekForecast = (() => {
       || description === "Fog" || description === "Sand"
       || description === "Ash" || description === "Tornado"
     ) return fogIcon;
+
+    return "-";
   };
 
   const displayWeekForecast = (forecastData) => {
@@ -51,7 +53,6 @@ const weekForecast = (() => {
       days[i].querySelector(".day-min-temp").textContent = forecastData[i].minTemp;
       days[i].querySelector(".day-max-temp").textContent = forecastData[i].maxTemp;
     }
-    // console.log(forecastData);
   };
 
   pubsub.subscribe("weekForecastRetrieved", displayWeekForecast);

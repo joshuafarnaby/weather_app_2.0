@@ -33,6 +33,8 @@ const hourlyForecast = (() => {
       || description === "Fog" || description === "Sand"
       || description === "Ash" || description === "Tornado"
     ) return fogIcon;
+
+    return "-";
   };
 
   const displayHourlyForecast = (forecastData) => {

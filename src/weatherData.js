@@ -27,11 +27,13 @@ const weatherData = (() => {
     if (nextDayNumber === 4) return "Thursday";
     if (nextDayNumber === 5) return "Friday";
     if (nextDayNumber === 6) return "Saturday";
+
+    return "-";
   };
 
   const getHour = (currentHour, index) => (currentHour + index) % 24;
 
-  const publishRelevantCurrentData = (cityName, {
+  const publishCurrentData = (cityName, {
     current, daily, timezone,
   }) => {
     pubsub.publish("currentDataRetrieved", {
@@ -59,16 +61,6 @@ const weatherData = (() => {
     pubsub.publish("hourlyDataRetrieved", hourly.slice(0, 24).map((hour, index) => ({
       hour: getHour(currentHour, index),
       temp: hour.temp.toFixed(1),
-      main: hour.weather[0].main,
-      description: capitalise(hour.weather[0].description),
-    })));
-
-    console.log(hourly.slice(0, 24).map((hour, index) => ({
-      hour: getHour(currentHour, index),
-      temp: hour.temp.toFixed(1),
-      // feelsLike: hour.feels_like.toFixed(1),
-      // windSpeed: hour.wind_speed,
-      // windDeg: hour.wind_deg,
       main: hour.weather[0].main,
       description: capitalise(hour.weather[0].description),
     })));
@@ -103,8 +95,7 @@ const weatherData = (() => {
         throw new Error(res.statusText);
       })
       .then((data) => {
-        console.log(data);
-        publishRelevantCurrentData(cityName, data);
+        publishCurrentData(cityName, data);
         publishHourlyData(data);
         publishWeeklyData(data);
       })
