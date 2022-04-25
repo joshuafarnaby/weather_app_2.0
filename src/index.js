@@ -10,9 +10,10 @@ import weekForecast from "./weekForecast";
 import sunnyIcon from "./assets/icons/sunny.svg";
 // document.querySelector(".day-icon").src = sunnyIcon;
 
-document.querySelectorAll(".hour-icon").forEach((icon) => { icon.src = sunnyIcon; });
+// document.querySelectorAll(".hour-icon").forEach((icon) => { icon.src = sunnyIcon; });
 
 searchCityForm.render();
 currentWeather.render();
-// weekForecast.render();
+hourlyForecast.render();
+weekForecast.render();
 weatherData.loadDefault("melbourne");

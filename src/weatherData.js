@@ -55,17 +55,13 @@ const weatherData = (() => {
 
   const publishHourlyData = ({ hourly, timezone_offset: timezoneOffset }) => {
     const currentHour = new Date(Date.now() + (timezoneOffset * 1000)).getUTCHours();
-    // const currentHour = new Date().getHours();
 
-    console.log(currentHour);
-    // pubsub.publish("hourlyDataRetrieved", hourly.slice(0, 24).map((hour) => ({
-    //   temp: convertKelvinToCelsius(hour.temp),
-    //   feelsLike: convertKelvinToCelsius(hour.feels_like),
-    //   windSpeed: hour.wind_speed,
-    //   windDeg: hour.wind_deg,
-    //   main: hour.weather[0].main,
-    //   description: hour.weather[0].description,
-    // })));
+    pubsub.publish("hourlyDataRetrieved", hourly.slice(0, 24).map((hour, index) => ({
+      hour: getHour(currentHour, index),
+      temp: hour.temp.toFixed(1),
+      main: hour.weather[0].main,
+      description: capitalise(hour.weather[0].description),
+    })));
 
     console.log(hourly.slice(0, 24).map((hour, index) => ({
       hour: getHour(currentHour, index),

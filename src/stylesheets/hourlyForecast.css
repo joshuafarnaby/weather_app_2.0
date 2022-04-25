@@ -10,12 +10,16 @@
   border: none;
   background: none;
   cursor: pointer;
-  /* width: none; */
-  /* height: min-content; */
+}
+
+.hour-section-wrapper > button:hover .direction-icon {
+  /* box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); */
+  transform: scale(1.2);
 }
 
 .direction-icon {
   width: 4rem;
+  transition: transform 0.2s ease-in-out;
 }
 
 .hour-card-container {
@@ -63,4 +67,6 @@
 .hour-description {
   line-height: 1;
   font-size: 1rem;
+  white-space: nowrap;
+  /* word-wrap: none; */
 }
