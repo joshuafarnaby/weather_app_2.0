@@ -1,12 +1,13 @@
 .current-weather-container {
   display: grid;
-  grid-template: min-content min-content 120px 120px / repeat(2, max-content);
+  grid-template: min-content min-content min-content 120px / repeat(3, max-content);
   place-items: center;
   grid-template-areas: 
-    "city-name city-name"
-    "temperature temperature"
-    "top-left top-right"
-    "bottom-left bottom-right";
+    "city-name city-name city-name"
+    "temperature temperature temperature"
+    "high-low high-low high-low"
+    "left middle right"
+
 }
 
 .info-box {
@@ -26,41 +27,60 @@
   grid-area: temperature;
 }
 
-.container-tl {
-  grid-area: top-left;
+.high-low {
+  grid-area: high-low;
+  font-size: 1rem;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.container-left {
+  grid-area: left;
   border-right: 1px solid var(--off-white);
-  border-bottom: 1px solid var(--off-white);
+  /* border-bottom: 1px solid var(--off-white); */
   width: 100%;
   height: 100%;
 }
 
-.container-tr {
-  grid-area: top-right;
+.container-middle {
+  grid-area: middle;
   border-left: 1px solid var(--off-white);
-  border-bottom: 1px solid var(--off-white);
-  width: 100%;
-  height: 100%;
-}
-
-.container-bl {
-  grid-area: bottom-left;
   border-right: 1px solid var(--off-white);
-  border-top: 1px solid var(--off-white);
   width: 100%;
   height: 100%;
 }
 
-.container-br {
+.container-right {
+  grid-area: right;
+  border-left: 1px solid var(--off-white);
+  /* border-top: 1px solid var(--off-white); */
+  width: 100%;
+  height: 100%;
+}
+
+/* .container-br {
   grid-area: bottom-right;
   border-left: 1px solid var(--off-white);
   border-top: 1px solid var(--off-white);
   width: 100%;
   height: 100%;
-}
+} */
 
 .weather-icon {
   width: 3.5rem;
   /* place-self: center; */
+}
+
+.row-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.weather-icon.small {
+  width: 2rem;
 }
 
 .center {
