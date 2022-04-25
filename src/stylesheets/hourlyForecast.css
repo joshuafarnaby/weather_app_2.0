@@ -10,10 +10,14 @@
   border: none;
   background: none;
   cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.hour-section-wrapper > button:active {
+  transform: scale(0.7);
 }
 
 .hour-section-wrapper > button:hover .direction-icon {
-  /* box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); */
   transform: scale(1.2);
 }
 
@@ -32,7 +36,7 @@
   align-items: center;
   gap: 20px;
   overflow-y: scroll;
-  /* background-color: rgba(0, 0, 0, 0.2); */
+  scroll-behavior: smooth;
 }
 
 .hour-card-container::-webkit-scrollbar-track {

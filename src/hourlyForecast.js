@@ -61,7 +61,13 @@ const hourlyForecast = (() => {
     }
   };
 
+  const scrollRight = () => { hourlyForecastWrapper.querySelector(".hour-card-container").scrollLeft += 600; };
+  const scrollLeft = () => { hourlyForecastWrapper.querySelector(".hour-card-container").scrollLeft -= 600; };
+
   pubsub.subscribe("hourlyDataRetrieved", displayHourlyForecast);
+
+  hourlyForecastWrapper.querySelector("#right-btn").addEventListener("click", scrollRight);
+  hourlyForecastWrapper.querySelector("#left-btn").addEventListener("click", scrollLeft);
 
   return {
     render() {
