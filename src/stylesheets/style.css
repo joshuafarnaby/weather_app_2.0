@@ -17,8 +17,6 @@
 }
 
 body {
-  /* background-image: url('../assets/milad-fakurian-VbC-EiOTDqA-unsplash.jpg'); */
-  /* background-image: url('../assets/taiki-ishikawa-hxYjU7HfcEo-unsplash.jpg'); */
   background-image: url('../assets/mahdi-bafande-_sF3N7rtoS8-unsplash.jpg');
   background-attachment: fixed;
   background-size: cover;
@@ -31,7 +29,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 200px;
-  /* justify-content: center; */
   align-items: center;
   padding: 100px 50px;
 }
