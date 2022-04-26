@@ -4,6 +4,7 @@
 @import './currentWeather.css';
 @import './weekForecast.css';
 @import './hourlyForecast.css';
+@import './degreeBtns.css';
 
 *, *::before, *::after {
   margin: 0;

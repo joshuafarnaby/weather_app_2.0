@@ -1,0 +1,38 @@
+.degree-btn-container {
+  display: flex;
+  gap: 15px;
+  position: fixed;
+  bottom: 8px;
+  left: 8px;
+  /* height: 3rem; */
+}
+
+.divider {
+  height: 2rem;
+  width: 2px;
+  margin-left: 4px;
+  background-color: var(--off-white);
+}
+
+.degree-btn {
+  font-size: 2rem;
+  font-family: inherit;
+  color: #ccc;
+  line-height: 1;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s all ease-in-out;
+}
+
+.degree-btn.active {
+  color: var(--off-white);
+}
+
+.degree-btn:hover {
+  transform: scale(1.1);
+}
+
+.degree-btn:active {
+  transform: scale(0.9);
+}

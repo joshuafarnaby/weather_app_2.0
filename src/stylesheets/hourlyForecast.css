@@ -56,12 +56,10 @@
 }
 
 .hour-icon-container {
-  /* text-align: center; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* margin: auto 0; */
 }
 
 .hour-icon {
@@ -72,5 +70,4 @@
   line-height: 1;
   font-size: 1rem;
   white-space: nowrap;
-  /* word-wrap: none; */
 }

@@ -47,7 +47,7 @@ const hourlyForecast = (() => {
               <img src="${getIcon(hour.main)}" alt="" class="hour-icon">
               <p class="hour-description">${hour.description}</p>
             </div>
-            <p><span class="hour-temp">${hour.temp}</span><span class="degree">˚C</span></p>
+            <p><span class="hour-temp temperature">${hour.temp}</span><span class="degree">˚C</span></p>
           </div>
         `;
       });

@@ -22,13 +22,13 @@ const currentWeather = (() => {
 
     container.innerHTML = `
       <h1 id="city-name" class="city-name"></h1>
-      <h2 class="current-temp"><span id="current-temp"></span><span class="degree-symbol">˚C</span></h2>
+      <h2 class="current-temp"><span id="current-temp" class="temperature"></span><span class="degree-symbol">˚C</span></h2>
       <div class="high-low">
-        <p class="row-center"><img src="${thermometerLow}" alt="wind speed icon" class="weather-icon small"><span id="min-temp"></span><span class="degree-symbol">˚C</span></p>
-        <p class="row-center"><img src="${thermometerHigh}" alt="wind speed icon" class="weather-icon small"><span id="max-temp"></span><span class="degree-symbol">˚C</span></p>
+        <p class="row-center"><img src="${thermometerLow}" alt="wind speed icon" class="weather-icon small"><span id="min-temp" class="temperature"></span><span class="degree-symbol">˚C</span></p>
+        <p class="row-center"><img src="${thermometerHigh}" alt="wind speed icon" class="weather-icon small"><span id="max-temp" class="temperature"></span><span class="degree-symbol">˚C</span></p>
       </div>
       <div class="container-left info-box">
-        <p class="row-center"><img src="${thermometerCheck}" alt="feels like icon" class="weather-icon small"><span id="feels-like"></span><span class="degree-symbol">˚C</span></p>
+        <p class="row-center"><img src="${thermometerCheck}" alt="feels like icon" class="weather-icon small"><span id="feels-like" class="temperature"></span><span class="degree-symbol">˚C</span></p>
         <p class="row-center"><img src="${windIcon}" alt="wind speed icon" class="weather-icon small"><span id="wind-speed"></span>mph</p>
         <p class="row-center"><img src="${compassIcon}" alt="wind direction icon" class="weather-icon small"><span id="wind-direction"></span></p>
       </div>

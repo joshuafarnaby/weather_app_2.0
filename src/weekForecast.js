@@ -4,6 +4,8 @@ import thunderstormIcon from "./assets/icons/thunderstorm.svg";
 import rainIcon from "./assets/icons/rain.svg";
 import snowIcon from "./assets/icons/snow.svg";
 import fogIcon from "./assets/icons/fog.svg";
+import thermometerLow from "./assets/icons/thermometerLow.svg";
+import thermometerHigh from "./assets/icons/thermometerHigh.svg";
 import pubsub from "./pubsub";
 
 const weekForecast = (() => {
@@ -19,8 +21,8 @@ const weekForecast = (() => {
             <img src="" alt="" class="day-icon">
           </div>
           <p class="day-description"></p>
-          <div class="end">Low: <span class="day-min-temp"></span><span class="degree-container">˚C</span></div>
-          <div class="end">High: <span class="day-max-temp"></span><span class="degree-container">˚C</span></div>
+          <p class="row-end-center"><img src="${thermometerLow}" alt="wind speed icon" class="weather-icon small"><span class="day-min-temp temperature"></span><span class="degree-symbol">˚C</span></p>
+          <p class="row-end-center"><img src="${thermometerHigh}" alt="wind speed icon" class="weather-icon small"><span class="day-max-temp temperature"></span><span class="degree-symbol">˚C</span></p>
         </div>
       `;
     }
