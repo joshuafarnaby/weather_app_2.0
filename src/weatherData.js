@@ -3,8 +3,6 @@ import pubsub from "./pubsub";
 const weatherData = (() => {
   const API_KEY = "cd1c2d65c0cb1e69529587b267dbe878";
 
-  // const kelvinToCelsius = (temperature) => (temperature - 273.15).toFixed(1);
-
   const capitalise = (string) => string
     .split(" ")
     .map((word) => word.substring(0, 1).toUpperCase() + word.substring(1))
@@ -99,8 +97,7 @@ const weatherData = (() => {
         publishHourlyData(data);
         publishWeeklyData(data);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
         publishError();
       });
   };

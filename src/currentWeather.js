@@ -16,8 +16,6 @@ import thermometerCheck from "./assets/icons/thermometerCheck.svg";
 import {
   kelvinToCelsius,
   kelvinToFahrenheit,
-  celsiusToFahrenheit,
-  fahrenheitToCelsius,
 } from "./utilities";
 
 import pubsub from "./pubsub";

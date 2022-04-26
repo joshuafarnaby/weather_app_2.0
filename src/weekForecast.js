@@ -11,8 +11,6 @@ import pubsub from "./pubsub";
 import {
   kelvinToCelsius,
   kelvinToFahrenheit,
-  celsiusToFahrenheit,
-  fahrenheitToCelsius,
 } from "./utilities";
 
 const weekForecast = (() => {
