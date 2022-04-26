@@ -88,7 +88,7 @@ const weatherData = (() => {
 
         throw new Error(res.statusText);
       })
-      .then((data) => fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${data[0].lat}&lon=${data[0].lon}&exclude=minutely,alert&appid=${API_KEY}&units=metric`))
+      .then((data) => fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${data[0].lat}&lon=${data[0].lon}&exclude=minutely,alert&appid=${API_KEY}`))
       .then((res) => {
         if (res.ok) return res.json();
 

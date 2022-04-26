@@ -13,6 +13,13 @@ import thermometerLow from "./assets/icons/thermometerLow.svg";
 import thermometerHigh from "./assets/icons/thermometerHigh.svg";
 import thermometerCheck from "./assets/icons/thermometerCheck.svg";
 
+import {
+  kelvinToCelsius,
+  kelvinToFahrenheit,
+  celsiusToFahrenheit,
+  fahrenheitToCelsius,
+} from "./utilities";
+
 import pubsub from "./pubsub";
 
 const currentWeather = (() => {
@@ -22,13 +29,13 @@ const currentWeather = (() => {
 
     container.innerHTML = `
       <h1 id="city-name" class="city-name"></h1>
-      <h2 class="current-temp"><span id="current-temp" class="temperature"></span><span class="degree-symbol">˚C</span></h2>
+      <h2 class="current-temp"><span id="current-temp" class="temperature"></span></h2>
       <div class="high-low">
-        <p class="row-center"><img src="${thermometerLow}" alt="wind speed icon" class="weather-icon small"><span id="min-temp" class="temperature"></span><span class="degree-symbol">˚C</span></p>
-        <p class="row-center"><img src="${thermometerHigh}" alt="wind speed icon" class="weather-icon small"><span id="max-temp" class="temperature"></span><span class="degree-symbol">˚C</span></p>
+        <p class="row-center"><img src="${thermometerLow}" alt="wind speed icon" class="weather-icon small"><span id="min-temp" class="temperature"></span></p>
+        <p class="row-center"><img src="${thermometerHigh}" alt="wind speed icon" class="weather-icon small"><span id="max-temp" class="temperature"></span></p>
       </div>
       <div class="container-left info-box">
-        <p class="row-center"><img src="${thermometerCheck}" alt="feels like icon" class="weather-icon small"><span id="feels-like" class="temperature"></span><span class="degree-symbol">˚C</span></p>
+        <p class="row-center"><img src="${thermometerCheck}" alt="feels like icon" class="weather-icon small"><span id="feels-like" class="temperature"></span></p>
         <p class="row-center"><img src="${windIcon}" alt="wind speed icon" class="weather-icon small"><span id="wind-speed"></span>mph</p>
         <p class="row-center"><img src="${compassIcon}" alt="wind direction icon" class="weather-icon small"><span id="wind-direction"></span></p>
       </div>
@@ -61,10 +68,26 @@ const currentWeather = (() => {
 
   const displayFunctions = [
     ({ cityName }) => { document.getElementById("city-name").textContent = cityName; },
-    ({ temp }) => { document.getElementById("current-temp").textContent = temp; },
-    ({ feelsLike }) => { document.getElementById("feels-like").textContent = feelsLike; },
-    ({ minTemp }) => { document.getElementById("min-temp").textContent = minTemp; },
-    ({ maxTemp }) => { document.getElementById("max-temp").textContent = maxTemp; },
+    ({ temp }) => {
+      document.getElementById("current-temp").textContent = document.body.classList.contains("celsius")
+        ? `${kelvinToCelsius(temp)} ˚C`
+        : `${kelvinToFahrenheit(temp)} ˚F`;
+    },
+    ({ feelsLike }) => {
+      document.getElementById("feels-like").textContent = document.body.classList.contains("celsius")
+        ? `${kelvinToCelsius(feelsLike)} ˚C`
+        : `${kelvinToFahrenheit(feelsLike)} ˚F`;
+    },
+    ({ minTemp }) => {
+      document.getElementById("min-temp").textContent = document.body.classList.contains("celsius")
+        ? `${kelvinToCelsius(minTemp)} ˚C`
+        : `${kelvinToFahrenheit(minTemp)} ˚F`;
+    },
+    ({ maxTemp }) => {
+      document.getElementById("max-temp").textContent = document.body.classList.contains("celsius")
+        ? `${kelvinToCelsius(maxTemp)} ˚C`
+        : `${kelvinToFahrenheit(maxTemp)} ˚F`;
+    },
     ({ description }) => { document.getElementById("weather-description").textContent = description; },
     ({ main }) => {
       const icon = document.getElementById("weather-icon");

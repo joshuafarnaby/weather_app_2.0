@@ -7,6 +7,7 @@ import snowIcon from "./assets/icons/snow.svg";
 import fogIcon from "./assets/icons/fog.svg";
 import rightIcon from "./assets/icons/right.svg";
 import leftIcon from "./assets/icons/left.svg";
+import { kelvinToCelsius, kelvinToFahrenheit } from "./utilities";
 
 const hourlyForecast = (() => {
   const hourlyForecastWrapper = (() => {
@@ -40,6 +41,10 @@ const hourlyForecast = (() => {
   const displayHourlyForecast = (forecastData) => {
     if (!hourlyForecastWrapper.querySelector(".hour-card-container").hasChildNodes()) {
       forecastData.forEach((hour, index) => {
+        const temperature = document.body.classList.contains("celsius")
+          ? `${kelvinToCelsius(hour.temp)} ˚C`
+          : `${kelvinToFahrenheit(hour.temp)} ˚F`;
+
         hourlyForecastWrapper.querySelector(".hour-card-container").innerHTML += `
           <div class="hour-forecast-card">
             <p class="hour">${index === 0 ? "Now" : hour.hour}</p>
@@ -47,7 +52,7 @@ const hourlyForecast = (() => {
               <img src="${getIcon(hour.main)}" alt="" class="hour-icon">
               <p class="hour-description">${hour.description}</p>
             </div>
-            <p><span class="hour-temp temperature">${hour.temp}</span><span class="degree">˚C</span></p>
+            <p><span class="hour-temp temperature">${temperature}</span></p>
           </div>
         `;
       });
@@ -58,7 +63,9 @@ const hourlyForecast = (() => {
         hourForecastCards[i].querySelector(".hour").innerText = i === 0 ? "Now" : forecastData[i].hour;
         hourForecastCards[i].querySelector(".hour-icon").src = getIcon(forecastData[i].main);
         hourForecastCards[i].querySelector(".hour-description").innerText = forecastData[i].description;
-        hourForecastCards[i].querySelector(".hour-temp").innerText = forecastData[i].temp;
+        hourForecastCards[i].querySelector(".hour-temp").innerText = document.body.classList.contains("celsius")
+          ? `${kelvinToCelsius(forecastData[i].temp)} ˚C`
+          : `${kelvinToFahrenheit(forecastData[i].temp)} ˚F`;
       }
     }
   };

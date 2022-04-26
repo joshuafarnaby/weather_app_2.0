@@ -7,9 +7,11 @@ import hourlyForecast from "./hourlyForecast";
 import weekForecast from "./weekForecast";
 import degreeButtons from "./degreeButtons";
 import pubsub from "./pubsub";
+import { celsiusToFahrenheit, fahrenheitToCelsius } from "./utilities";
 
 (() => {
-  let degreeMode = "celsius";
+  // let degreeMode = "celsius";
+  document.body.classList.add("celsius");
 
   searchCityForm.render();
   currentWeather.render();
@@ -19,21 +21,19 @@ import pubsub from "./pubsub";
   weatherData.loadDefault("melbourne");
 
   const switchDegreeMode = (newDegreeMode) => {
-    if (degreeMode === newDegreeMode) return;
+    if (document.body.getAttribute("class") === newDegreeMode) return;
 
     document.querySelectorAll(".temperature").forEach((tempDisplayElement) => {
-      const currentTemp = Number(tempDisplayElement.textContent);
+      const currentTemp = Number(tempDisplayElement.textContent.split(" ")[0]);
 
       if (newDegreeMode === "celsius") {
-        tempDisplayElement.textContent = ((currentTemp - 32) * (5 / 9)).toFixed(1);
-        tempDisplayElement.nextElementSibling.textContent = "˚C";
+        tempDisplayElement.textContent = `${fahrenheitToCelsius(currentTemp)} ˚C`;
       } else {
-        tempDisplayElement.textContent = ((currentTemp * (9 / 5)) + 32).toFixed(1);
-        tempDisplayElement.nextElementSibling.textContent = "˚F";
+        tempDisplayElement.textContent = `${celsiusToFahrenheit(currentTemp)} ˚F`;
       }
     });
 
-    degreeMode = newDegreeMode;
+    document.body.setAttribute("class", newDegreeMode);
   };
 
   pubsub.subscribe("degreeChange", switchDegreeMode);

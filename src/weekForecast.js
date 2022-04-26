@@ -8,6 +8,13 @@ import thermometerLow from "./assets/icons/thermometerLow.svg";
 import thermometerHigh from "./assets/icons/thermometerHigh.svg";
 import pubsub from "./pubsub";
 
+import {
+  kelvinToCelsius,
+  kelvinToFahrenheit,
+  celsiusToFahrenheit,
+  fahrenheitToCelsius,
+} from "./utilities";
+
 const weekForecast = (() => {
   const weekForecastContainer = (() => {
     const container = document.createElement("div");
@@ -21,8 +28,8 @@ const weekForecast = (() => {
             <img src="" alt="" class="day-icon">
           </div>
           <p class="day-description"></p>
-          <p class="row-end-center"><img src="${thermometerLow}" alt="wind speed icon" class="weather-icon small"><span class="day-min-temp temperature"></span><span class="degree-symbol">˚C</span></p>
-          <p class="row-end-center"><img src="${thermometerHigh}" alt="wind speed icon" class="weather-icon small"><span class="day-max-temp temperature"></span><span class="degree-symbol">˚C</span></p>
+          <p class="row-end-center"><img src="${thermometerLow}" alt="wind speed icon" class="weather-icon small"><span class="day-min-temp temperature"></span></p>
+          <p class="row-end-center"><img src="${thermometerHigh}" alt="wind speed icon" class="weather-icon small"><span class="day-max-temp temperature"></span></p>
         </div>
       `;
     }
@@ -52,8 +59,13 @@ const weekForecast = (() => {
       days[i].querySelector(".day").textContent = forecastData[i].day;
       days[i].querySelector(".day-icon").src = getIcon(forecastData[i].main);
       days[i].querySelector(".day-description").textContent = forecastData[i].description;
-      days[i].querySelector(".day-min-temp").textContent = forecastData[i].minTemp;
-      days[i].querySelector(".day-max-temp").textContent = forecastData[i].maxTemp;
+      days[i].querySelector(".day-min-temp").textContent = document.body.classList.contains("celsius")
+        ? `${kelvinToCelsius(forecastData[i].minTemp)} ˚C`
+        : `${kelvinToFahrenheit(forecastData[i].minTemp)} ˚F`;
+
+      days[i].querySelector(".day-max-temp").textContent = document.body.classList.contains("celsius")
+        ? `${kelvinToCelsius(forecastData[i].maxTemp)} ˚C`
+        : `${kelvinToFahrenheit(forecastData[i].maxTemp)} ˚F`;
     }
   };
 
